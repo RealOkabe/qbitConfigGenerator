@@ -16,8 +16,15 @@ def readAnimeNames():
     return animeNamesList
 
 # Function to create the anime name folders
-def createAnimeFolders():
-    animeNamesList = readAnimeNames()
+def createAnimeFolders(animeNamesList):
     for animeName in animeNamesList:
         fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
+
+# Function to create regex of anime names to be used during config gen
+def createAnimeRegex(animeNamesList):
+    animeRegexList = []
+    for animeName in animeNamesList:
+        animeName = '.*' + animeName.replace(' ', '.*') + '.*'
+        animeRegexList.append(animeName)
+    return animeRegexList
