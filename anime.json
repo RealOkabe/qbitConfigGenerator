@@ -1,0 +1,21 @@
+{
+    "Anime": {
+        "addPaused": null,
+        "affectedFeeds": [
+            "https://subsplease.org/rss/?t&r=1080"
+        ],
+        "assignedCategory": "",
+        "enabled": true,
+        "episodeFilter": "",
+        "ignoreDays": 0,
+        "lastMatch": "08 Mar 2022 14:32:07 +0000",
+        "mustContain": "Kimetsu.*no.*Yaiba.*",
+        "mustNotContain": "",
+        "previouslyMatchedEpisodes": [
+        ],
+        "savePath": "D:/Torrents",
+        "smartFilter": false,
+        "torrentContentLayout": null,
+        "useRegex": true
+    }
+}
