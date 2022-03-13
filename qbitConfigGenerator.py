@@ -1,4 +1,4 @@
-import os
+import os, json
 
 downloadFolder = input("Enter the path to torrent download folder: ")
 
@@ -28,3 +28,9 @@ def createAnimeRegex(animeNamesList):
         animeName = '.*' + animeName.replace(' ', '.*') + '.*'
         animeRegexList.append(animeName)
     return animeRegexList
+
+# Function to get the json config
+def readAnimeConfig():
+    configFile = open('anime.json')
+    jsonData = json.load(configFile)
+    return jsonData
