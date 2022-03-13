@@ -21,16 +21,25 @@ def createAnimeFolders(animeNamesList):
         fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
 
-# Function to create regex of anime names to be used during config gen
-def createAnimeRegex(animeNamesList):
-    animeRegexList = []
-    for animeName in animeNamesList:
-        animeName = '.*' + animeName.replace(' ', '.*') + '.*'
-        animeRegexList.append(animeName)
-    return animeRegexList
+# Function to create regex of anime name
+def createAnimeRegex(animeName):
+    return ('.*' + animeName.replace(' ', '.*') + '.*')
 
 # Function to get the json config
 def readAnimeConfig():
     configFile = open('anime.json')
     jsonData = json.load(configFile)
     return jsonData
+
+# Function to generate configs according to anime names
+def generateAnimeConfigs(animeNamesList, downloadFolder):
+    sampleConfig = readAnimeConfig()
+    theConfig = sampleConfig['Anime']
+    sampleConfig.pop('Anime')
+    for animeName in animeNamesList:
+        theConfig['mustContain'] = createAnimeRegex(animeName)
+        theConfig['savePath'] = os.path.join(downloadFolder, animeName)
+        sampleConfig[animeName] = theConfig
+        with open(animeName + '.json', 'w') as animeFile:
+            json.dump(sampleConfig, animeFile)
+            sampleConfig.pop(animeName)
