@@ -1,7 +1,5 @@
 import os, json
 
-downloadFolder = input("Enter the path to torrent download folder: ")
-
 # Function to read anime names from file called animenames.txt
 # Just need to make a txt file containing anime titles separated by \n
 # For example:
@@ -16,7 +14,7 @@ def readAnimeNames():
     return animeNamesList
 
 # Function to create the anime name folders
-def createAnimeFolders(animeNamesList):
+def createAnimeFolders(animeNamesList, downloadFolder):
     for animeName in animeNamesList:
         fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
@@ -32,7 +30,10 @@ def readAnimeConfig():
     return jsonData
 
 # Function to generate configs according to anime names
-def generateAnimeConfigs(animeNamesList, downloadFolder):
+def generateAnimeConfigs():
+    animeNamesList = readAnimeNames()
+    downloadFolder = input("Enter the path where you want to store the downloads: ")
+    createAnimeFolders(animeNamesList, downloadFolder)
     sampleConfig = readAnimeConfig()
     theConfig = sampleConfig['Anime']
     sampleConfig.pop('Anime')
