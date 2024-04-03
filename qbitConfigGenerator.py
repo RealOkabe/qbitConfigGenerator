@@ -13,14 +13,23 @@ def readAnimeNames():
     animeNamesFile.close()
     return animeNamesList
 
-# Function to create the anime name folders
-def createAnimeFolders(animeNamesList, downloadFolder):
+# Function to generate configs and create the anime name folders
+def generateAnimeConfigs(animeNamesList, downloadFolder):
+    sampleConfig = readAnimeConfig()
+    theConfig = sampleConfig['Anime']
+    sampleConfig.pop('Anime')
     for animeName in animeNamesList:
         season = input(f"Is this a new season of the anime: {animeName}? If yes, then just enter the season number. Otherwise, just press Enter\n")
         if season:
-            animeName = os.path.join(animeName, f"Season 0{season}")
+            animeName = os.path.join(animeName, f"Season {season}")
         fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
+        theConfig['mustContain'] = createAnimeRegex(animeName)
+        theConfig['savePath'] = fullPath
+        sampleConfig[animeName] = theConfig
+        with open(animeName + '.json', 'w') as animeFile:
+            json.dump(sampleConfig, animeFile)
+            sampleConfig.pop(animeName)
 
 # Function to create regex of anime name
 def createAnimeRegex(animeName):
@@ -36,14 +45,4 @@ def readAnimeConfig():
 def generateAnimeConfigs():
     animeNamesList = readAnimeNames()
     downloadFolder = input("Enter the path where you want to store the downloads: ")
-    createAnimeFolders(animeNamesList, downloadFolder)
-    sampleConfig = readAnimeConfig()
-    theConfig = sampleConfig['Anime']
-    sampleConfig.pop('Anime')
-    for animeName in animeNamesList:
-        theConfig['mustContain'] = createAnimeRegex(animeName)
-        theConfig['savePath'] = os.path.join(downloadFolder, animeName)
-        sampleConfig[animeName] = theConfig
-        with open(animeName + '.json', 'w') as animeFile:
-            json.dump(sampleConfig, animeFile)
-            sampleConfig.pop(animeName)
+    generateAnimeConfigs(animeNamesList, downloadFolder)
