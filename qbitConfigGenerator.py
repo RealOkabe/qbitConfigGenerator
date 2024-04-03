@@ -21,8 +21,9 @@ def createFoldersAndConfigs(animeNamesList, downloadFolder):
     for animeName in animeNamesList:
         season = input(f"Is this a new season of the anime: {animeName}? If yes, then just enter the season number. Otherwise, just press Enter\n")
         if season:
-            animeName = os.path.join(animeName, f"Season {season}")
-        fullPath = os.path.join(downloadFolder, animeName)
+            fullPath = os.path.join(downloadFolder, animeName, f"Season {season}")
+        else:
+            fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
         theConfig['mustContain'] = createAnimeRegex(animeName)
         theConfig['savePath'] = fullPath
