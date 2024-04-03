@@ -14,7 +14,7 @@ def readAnimeNames():
     return animeNamesList
 
 # Function to generate configs and create the anime name folders
-def generateAnimeConfigs(animeNamesList, downloadFolder):
+def createFoldersAndConfigs(animeNamesList, downloadFolder):
     sampleConfig = readAnimeConfig()
     theConfig = sampleConfig['Anime']
     sampleConfig.pop('Anime')
@@ -45,4 +45,4 @@ def readAnimeConfig():
 def generateAnimeConfigs():
     animeNamesList = readAnimeNames()
     downloadFolder = input("Enter the path where you want to store the downloads: ")
-    generateAnimeConfigs(animeNamesList, downloadFolder)
+    createFoldersAndConfigs(animeNamesList, downloadFolder)
