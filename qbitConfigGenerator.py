@@ -16,6 +16,9 @@ def readAnimeNames():
 # Function to create the anime name folders
 def createAnimeFolders(animeNamesList, downloadFolder):
     for animeName in animeNamesList:
+        season = input(f"Is this a new season of the anime: {animeName}? If yes, then just enter the season number. Otherwise, just press Enter\n")
+        if season:
+            animeName = os.path.join(animeName, f"Season 0{season}")
         fullPath = os.path.join(downloadFolder, animeName)
         os.makedirs(fullPath, exist_ok = True)
 
@@ -25,7 +28,7 @@ def createAnimeRegex(animeName):
 
 # Function to get the json config
 def readAnimeConfig():
-    configFile = open('anime.json')
+    configFile = open('sample/anime.json')
     jsonData = json.load(configFile)
     return jsonData
 
