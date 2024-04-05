@@ -16,8 +16,9 @@ def readAnimeNames():
 # Function to generate configs and create the anime name folders
 def createFoldersAndConfigs(animeNamesList, downloadFolder):
     sampleConfig = readAnimeConfig()
-    theConfig = sampleConfig['Anime']
+    theConfig = dict(sampleConfig['Anime'])
     sampleConfig.pop('Anime')
+    configs = {}
     for animeName in animeNamesList:
         season = input(f"Is this a new season of the anime: {animeName}? If yes, then just enter the season number. Otherwise, just press Enter\n")
         if season:
@@ -27,10 +28,18 @@ def createFoldersAndConfigs(animeNamesList, downloadFolder):
         os.makedirs(fullPath, exist_ok = True)
         theConfig['mustContain'] = createAnimeRegex(animeName)
         theConfig['savePath'] = fullPath
-        sampleConfig[animeName] = theConfig
-        with open(animeName + '.json', 'w') as animeFile:
-            json.dump(sampleConfig, animeFile)
-            sampleConfig.pop(animeName)
+        sampleConfig[animeName] = {}
+        sampleConfig[animeName].update(theConfig)
+        print(sampleConfig)
+        configs.update(sampleConfig)
+        # configs[animeName] = sampleConfig.pop(animeName)
+        sampleConfig.pop(animeName)
+        print(configs)
+        # with open(animeName + '.json', 'w') as animeFile:
+        #     json.dump(sampleConfig, animeFile)
+        #     sampleConfig.pop(animeName)
+    with open("AnimeConfig.json", 'w') as animeConfig:
+        json.dump(configs, animeConfig)
 
 # Function to create regex of anime name
 def createAnimeRegex(animeName):
