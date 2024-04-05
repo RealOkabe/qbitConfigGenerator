@@ -30,14 +30,8 @@ def createFoldersAndConfigs(animeNamesList, downloadFolder):
         theConfig['savePath'] = fullPath
         sampleConfig[animeName] = {}
         sampleConfig[animeName].update(theConfig)
-        print(sampleConfig)
         configs.update(sampleConfig)
-        # configs[animeName] = sampleConfig.pop(animeName)
         sampleConfig.pop(animeName)
-        print(configs)
-        # with open(animeName + '.json', 'w') as animeFile:
-        #     json.dump(sampleConfig, animeFile)
-        #     sampleConfig.pop(animeName)
     with open("AnimeConfig.json", 'w') as animeConfig:
         json.dump(configs, animeConfig)
 
